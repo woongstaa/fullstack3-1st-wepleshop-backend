@@ -77,7 +77,6 @@ CREATE TABLE `product_details` (
     `size_id` INTEGER NOT NULL,
     `quantity` INTEGER NOT NULL,
 
-    UNIQUE INDEX `product_details_color_id_key`(`color_id`),
     INDEX `color_id`(`color_id`),
     INDEX `size_id`(`size_id`),
     PRIMARY KEY (`id`)
