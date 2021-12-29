@@ -11,13 +11,11 @@ datasource db {
 }
 
 model users {
-  id                Int              @id @default(autoincrement())
-  name              String
-  email             String           @unique
-  password          String
-  users_isLikes     users_isLikes[]
-  product_details   product_details? @relation(fields: [product_detailsId], references: [id])
-  product_detailsId Int?
+  id            Int             @id @default(autoincrement())
+  name          String
+  email         String          @unique
+  password      String
+  users_isLikes users_isLikes[]
 }
 
 model users_isLikes {
@@ -77,15 +75,14 @@ model products {
 }
 
 model product_details {
-  id             Int            @id @default(autoincrement())
+  id             Int             @id @default(autoincrement())
   product_id     Int
-  color_id       Int            @unique
-  size_id        Int
+  color_id       Int?            @unique
+  size_id        Int?
   quantity       Int
-  products       products       @relation(fields: [product_id], references: [id])
-  product_colors product_colors @relation(fields: [color_id], references: [id])
-  product_sizes  product_sizes  @relation(fields: [size_id], references: [id])
-  users          users[]
+  products       products        @relation(fields: [product_id], references: [id])
+  product_colors product_colors? @relation(fields: [color_id], references: [id])
+  product_sizes  product_sizes?  @relation(fields: [size_id], references: [id])
 
   @@index([color_id], name: "color_id")
   @@index([size_id], name: "size_id")
