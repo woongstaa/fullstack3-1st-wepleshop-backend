@@ -1,10 +1,11 @@
+const res = require('express/lib/response');
 const { product_detail_dao } = require('../models');
 
-const productDetail = async () => {
-  const detail = product_detail_dao.productDetail();
+const productDetail = async (id) => {
+  const detail = await product_detail_dao.productDetail(id);
 
   if (!detail) {
-    const error = new Error('Please show me anything!');
+    const error = new Error('DATA NOT FOUND');
     throw error;
   }
 

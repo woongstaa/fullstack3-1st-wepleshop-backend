@@ -1,6 +1,6 @@
 const prisma = require('../prisma');
 
-const productDetail = async () => {
+const productDetail = async (id) => {
   const detail = await prisma.$queryRaw`
     SELECT
       products.id,
@@ -16,7 +16,7 @@ const productDetail = async () => {
     JOIN product_details ON products.id = product_details.product_id
     JOIN product_colors ON product_colors.id = product_details.color_id
     JOIN product_sizes ON product_sizes.id = product_details.size_id
-    WHERE products.id = 26`;
+    WHERE products.id = ${id}`;
 
   return detail;
 };
