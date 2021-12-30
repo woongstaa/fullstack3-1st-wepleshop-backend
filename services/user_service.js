@@ -30,7 +30,7 @@ const signUp = async (name, email, password) => {
   const userData = await userDao.getUserByEmail(email);
 
   if (userData) {
-    const error = new Error('이미 존재하는 email입니다.');
+    const error = new Error('EMAIL ALREADY EXISTS');
     error.statusCode = 400;
 
     throw error;
