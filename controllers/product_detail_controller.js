@@ -4,10 +4,7 @@ const productDetail = async (req, res) => {
   try {
     const detail = await product_detail_service.productDetail();
 
-    return res.status(200).json({
-      message: 'SUCCESS',
-      data: detail,
-    });
+    return res.status(200).json(detail);
   } catch (err) {
     console.log(err);
 
