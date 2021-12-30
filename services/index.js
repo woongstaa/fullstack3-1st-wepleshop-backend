@@ -1,3 +1,3 @@
-const product_detail_service = require('./product_detail_service');
+const productDetailService = require('./product_detail_service');
 
-module.exports = { product_detail_service };
+module.exports = { productDetailService };

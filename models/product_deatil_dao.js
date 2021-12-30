@@ -1,4 +1,4 @@
-const prisma = require('../prisma');
+const prisma = require('./index');
 
 const productDetail = async (id) => {
   const detail = await prisma.$queryRaw`
