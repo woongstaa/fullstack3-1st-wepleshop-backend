@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router(); // express 라우팅 기능을 사용하기 위해서 router 객체가 필요합니다
 const tempController = require('../controllers/index');
-const categoryRouter = require('./categoryRoute');
+const categoryRouter = require('./category_route');
 
 router.get('/ping', tempController.getPing);
 router.use('/categories', categoryRouter);
