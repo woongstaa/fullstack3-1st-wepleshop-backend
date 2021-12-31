@@ -9,3 +9,98 @@ datasource db {
   provider = "mysql"
   url      = env("DATABASE_URL")
 }
+
+model users {
+  id            Int             @id @default(autoincrement())
+  name          String
+  email         String          @unique
+  password      String
+  users_isLikes users_isLikes[]
+}
+
+model users_isLikes {
+  id         Int      @id @default(autoincrement())
+  user_id    Int
+  product_id Int
+  users      users    @relation(fields: [user_id], references: [id])
+  products   products @relation(fields: [product_id], references: [id])
+
+  @@index([product_id], name: "product_id")
+  @@index([user_id], name: "user_id")
+}
+
+model product_sizes {
+  id              Int               @id @default(autoincrement())
+  name            String            @db.VarChar(100)
+  product_details product_details[]
+}
+
+model product_colors {
+  id              Int               @id @default(autoincrement())
+  name            String            @db.VarChar(100)
+  hex             String            @db.VarChar(10)
+  product_details product_details[]
+}
+
+model product_imgs {
+  id         Int      @id @default(autoincrement())
+  img_url    String
+  product_id Int
+  product    products @relation(fields: [product_id], references: [id])
+
+  @@index([product_id], name: "product_id")
+}
+
+model categories {
+  id             Int              @id @default(autoincrement())
+  name           String           @db.VarChar(100)
+  products       products[]
+  sub_categories sub_categories[]
+}
+
+model products {
+  id              Int               @id @default(autoincrement())
+  name            String            @db.VarChar(100)
+  price           Int
+  category_id     Int
+  subcategory_id  Int
+  like_count      Int
+  product_imgs    product_imgs[]
+  product_details product_details[]
+  users_isLikes   users_isLikes[]
+  categories      categories        @relation(fields: [category_id], references: [id])
+  sub_categories  sub_categories    @relation(fields: [subcategory_id], references: [id])
+
+  @@index([category_id], name: "category_id")
+}
+
+model product_details {
+  id             Int             @id @default(autoincrement())
+  product_id     Int
+  color_id       Int?
+  size_id        Int?
+  quantity       Int
+  products       products        @relation(fields: [product_id], references: [id])
+  product_colors product_colors? @relation(fields: [color_id], references: [id])
+  product_sizes  product_sizes?  @relation(fields: [size_id], references: [id])
+
+  @@index([color_id], name: "color_id")
+  @@index([size_id], name: "size_id")
+}
+
+model sub_categories {
+  id          Int        @id @default(autoincrement())
+  name        String
+  category_id Int
+  categories  categories @relation(fields: [category_id], references: [id])
+  products    products[]
+
+  @@index([category_id], name: "category_id")
+}
+
+model slides {
+  id          Int    @id @default(autoincrement())
+  title       String @db.VarChar(200)
+  img_url     String
+  description String @db.VarChar(1000)
+}
