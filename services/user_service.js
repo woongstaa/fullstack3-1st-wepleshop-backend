@@ -1,5 +1,5 @@
 const bcrypt = require('bcrypt');
-const userDao = require('../models/user_dao');
+const { userDao } = require('../models/');
 
 function compare(reqPassword, dbPassword) {
   const isSame = bcrypt.compareSync(reqPassword, dbPassword);

@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-const userServices = require('../services/user_service');
+const { userService } = require('../services');
 
 const signIn = async (req, res) => {
   try {
@@ -12,7 +12,7 @@ const signIn = async (req, res) => {
       }
     }
 
-    const user = await userServices.signIn(email, password);
+    const user = await userService.signIn(email, password);
     const token = jwt.sign({ id: 1 }, email, { expiresIn: '30m' });
     return res.status(200).json({ message: 'LOGIN_SUCCEES', user, token });
   } catch (err) {
@@ -25,7 +25,7 @@ const signUp = async (req, res) => {
   try {
     const { name, email, password } = req.body;
 
-    const user = await userServices.signUp(name, email, password);
+    const user = await userService.signUp(name, email, password);
 
     return res.status(200).json({ message: 'REGISTER_SUCCEES' });
   } catch (err) {
