@@ -1,8 +1,8 @@
-const categoryService = require('../services/product_category_service');
+const { productCategoryService } = require('../services');
 
 const categories = async (req, res) => {
   try {
-    const categories = await categoryService.categories();
+    const categories = await productCategoryService.categories();
 
     return res.status(200).json({ message: categories });
   } catch (err) {
@@ -12,7 +12,7 @@ const categories = async (req, res) => {
 
 const subCategories = async (req, res) => {
   try {
-    const categories = await categoryService.subCategories();
+    const categories = await productCategoryService.subCategories();
 
     return res.status(200).json({ message: categories });
   } catch (err) {
@@ -24,7 +24,7 @@ const filterCategories = async (req, res) => {
   try {
     const { category_id, sub_category_id } = req.body;
 
-    const category = await categoryService.filterCategories(
+    const category = await productCategoryService.filterCategories(
       category_id,
       sub_category_id
     );

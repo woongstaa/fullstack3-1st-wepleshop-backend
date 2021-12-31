@@ -1,15 +1,15 @@
-const categoryDao = require('../models/product_category_dao');
+const { productCategoryDao } = require('../models');
 
 const categories = async () => {
-  return await categoryDao.getCategories();
+  return await productCategoryDao.getCategories();
 };
 
 const subCategories = async () => {
-  return await categoryDao.getSubCategories();
+  return await productCategoryDao.getSubCategories();
 };
 
 const filterCategories = async (category_id, sub_category_id) => {
-  const [category] = await categoryDao.findCategories(
+  const [category] = await productCategoryDao.findCategories(
     category_id,
     sub_category_id
   );

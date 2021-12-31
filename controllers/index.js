@@ -1,10 +1,9 @@
-const getPing = async (req, res) => {
-  try {
-    return res.status(200).json({ message: 'pong' });
-  } catch (err) {
-    console.log(err);
-    return res.status(500).json({ message: err.message });
-  }
-};
+const productDetailController = require('./product_detail_controller');
+const productSortController = require('./product_sort_controller');
+const productCategoryController = require('./product_category_controller');
 
-module.exports = { getPing };
+module.exports = {
+  productDetailController,
+  productSortController,
+  productCategoryController,
+};
