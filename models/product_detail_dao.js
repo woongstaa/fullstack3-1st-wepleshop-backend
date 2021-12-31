@@ -3,7 +3,7 @@ const prisma = require('./index');
 const productDetail = async (id) => {
   const detail = await prisma.$queryRaw`
     SELECT
-      products.id,
+      products.id as product_id,
       products.name as product_name,
       products.price as produdct_price,
       product_details.quantity as product_quantity,

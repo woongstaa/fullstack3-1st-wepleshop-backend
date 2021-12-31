@@ -97,3 +97,10 @@ model sub_categories {
 
   @@index([category_id], name: "category_id")
 }
+
+model slides {
+  id          Int    @id @default(autoincrement())
+  title       String @db.VarChar(200)
+  img_url     String
+  description String @db.VarChar(1000)
+}

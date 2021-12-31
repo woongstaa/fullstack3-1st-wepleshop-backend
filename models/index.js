@@ -3,6 +3,7 @@ const prisma = new PrismaClient();
 
 module.exports = prisma;
 
-const productDetailDao = require('./product_deatil_dao');
+const productDetailDao = require('./product_detail_dao');
+const productSortDao = require('./product_sort_dao'); 
 
-module.exports = { productDetailDao };
+module.exports = { productDetailDao, productSortDao };

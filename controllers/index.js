@@ -1,3 +1,3 @@
 const productDetailController = require('./product_detail_controller');
-
-module.exports = { productDetailController };
+const productSortController =require('./product_sort_controller')
+module.exports = { productDetailController,productSortController };
