@@ -5,4 +5,5 @@ const userRouter = require('./user_router');
 
 router.use('/products', productRouter);
 router.use('/users', userRouter);
+
 module.exports = router;
