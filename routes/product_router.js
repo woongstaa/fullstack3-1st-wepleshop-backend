@@ -3,7 +3,6 @@ const router = express.Router();
 
 const { productDetailController,productSortController } = require('../controllers');
 
-// router.get('', productDetailController.productDetail);
 router.get('/details', productDetailController.productDetail);
 router.get('/sort', productSortController.productSort);
 
