@@ -1,7 +1,11 @@
-const productDao = require("../models/product_sort_dao");
+const { productSortDao } = require("../models");
 
-const getSortedList = async (productList) => {
-  const [ sortedList ] = await productDao.getSortedList(productList); 
+const productSort = async () => {
+  const sortedList  = await productSortDao.productSort(); 
+  if (!sortedList) {
+      const error = new Error('DATA NOT FOUND');
+      throw error;
+  }
   return sortedList; 
 }
-module.exports = getSortedList;
+module.exports = { productSort };

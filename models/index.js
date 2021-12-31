@@ -1,15 +1,9 @@
 const { PrismaClient } = require('@prisma/client');
-<<<<<<< HEAD
-
-const prisma = new PrismaClient();
-
-module.exports = prisma; 
-=======
 const prisma = new PrismaClient();
 
 module.exports = prisma;
 
-const productDetailDao = require('./product_deatil_dao');
+const productDetailDao = require('./product_detail_dao');
+const productSortDao = require('./product_sort_dao'); 
 
-module.exports = { productDetailDao };
->>>>>>> d3b43957478d8fb3ad70cb98e2f6b081fbe6e4a1
+module.exports = { productDetailDao, productSortDao };

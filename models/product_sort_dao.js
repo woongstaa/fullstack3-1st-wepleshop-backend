@@ -1,8 +1,9 @@
 const prisma = require('./index');
 
-const getSortedList = async (productList) => {
-    const sortedList = await prisma.$queryRaw``;
+const productSort = async () => {
+    const sortedList = await prisma.$queryRaw`
+      SELECT * FROM products ORDER BY like_count DESC`;
     return sortedList; 
   }
 
-module.exports = getSortedList; 
+module.exports = { productSort }; 

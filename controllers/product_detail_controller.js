@@ -14,8 +14,4 @@ const productDetail = async (req, res) => {
   }
 };
 
-<<<<<<< HEAD
 module.exports = { productDetail };
-=======
-module.exports = { productDetail };
->>>>>>> d3b43957478d8fb3ad70cb98e2f6b081fbe6e4a1

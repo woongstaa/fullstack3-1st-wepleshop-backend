@@ -1,11 +1,8 @@
-const productService = require("../services/product_sort_service");
+const { productSortService } = require("../services");
 
-const getSortedList = async (req, res) => {
+const productSort = async (req, res) => {
     try {
-        // category API를 통해 지정된 카테고리의 총 상품리스트를 req를 통해 받음
-        const { productList } = req.body; 
-
-        const sortedProducts = await productService.getSortedList(productList);
+        const sortedProducts = await productSortService.productSort();
   
         return res.status(200).json({ data: sortedProducts });
       } catch (err) {
@@ -14,4 +11,4 @@ const getSortedList = async (req, res) => {
       }
 }
 
-module.exports = { getSortedList }
+module.exports = { productSort }
