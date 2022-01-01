@@ -20,8 +20,7 @@ const signIn = async (email, password) => {
 
     throw error;
   }
-
-  const signToken = token.signToken(email);
+  const signToken = token.signToken(user.email);
   return signToken;
 };
 
@@ -33,9 +32,35 @@ const signUp = async (name, email, password) => {
     error.statusCode = 400;
 
     throw error;
-  } else {
-    const hashedPassword = bcrypt.hashSync(password, 10);
-    return userDao.createUser(name, email, hashedPassword);
   }
+
+  const hashedPassword = bcrypt.hashSync(password, 10);
+  return await userDao.createUser(name, email, hashedPassword);
 };
-module.exports = { signIn, signUp };
+
+const like = async (user_id, product_id) => {
+  const likeData = await userDao.likeExist(user_id, product_id);
+
+  if (likeData) {
+    const error = new Error('ALREADY LIKED BY USER');
+    error.statusCode = 400;
+
+    throw error;
+  }
+  return await userDao.like(user_id, product_id);
+};
+
+const unLike = async (user_id, product_id) => {
+  const likeData = await userDao.likeExist(user_id, product_id);
+
+  if (!likeData) {
+    const error = new Error('ALREADY IS NOT LIKED');
+    error.statusCode = 400;
+
+    throw error;
+  }
+
+  return await userDao.unLike(user_id, product_id);
+};
+
+module.exports = { signIn, signUp, like, unLike };

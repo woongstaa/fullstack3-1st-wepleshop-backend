@@ -12,7 +12,8 @@ const signIn = async (req, res) => {
     }
 
     const token = await userService.signIn(email, password);
-    return res.status(200).json({ message: 'LOGIN_SUCCEES', user, token });
+
+    return res.status(200).json({ message: 'LOGIN_SUCCEES', token });
   } catch (err) {
     console.log('controller error: ', err);
     return res.status(err.statusCode || 500).json({ message: err.message });
@@ -31,11 +32,11 @@ const signUp = async (req, res) => {
       }
     }
 
-    const checkEmail = email.includes('@') ? true : false;
+    const checkId = email.includes('@') ? true : false; // ID, Password 유효성 검증
     const checkPw = password.length >= 8 ? true : false;
 
-    if (!checkEmail || !checkPw) {
-      const error = new Error('Check your Email or Password again');
+    if (!checkId || !checkPw) {
+      const error = new Error('CHECK YOUR EMAIL OR PASSWORD AGAIN');
       error.statusCode = 400;
 
       throw error;
@@ -52,4 +53,34 @@ const signUp = async (req, res) => {
   }
 };
 
-module.exports = { signIn, signUp };
+const like = async (req, res) => {
+  try {
+    const { user_id, product_id } = req.body;
+
+    const like = await userService.like(user_id, product_id);
+
+    return res
+      .status(200)
+      .json({ message: 'LIKE_SUCCEES', user_id, product_id });
+  } catch (err) {
+    console.log(err);
+    return res.status(err.statusCode || 500).json({ message: err.message });
+  }
+};
+
+const unLike = async (req, res) => {
+  try {
+    const { user_id, product_id } = req.body;
+
+    const unLike = await userService.unLike(user_id, product_id);
+
+    return res
+      .status(200)
+      .json({ message: 'UNLIKE_SUCCEES', user_id, product_id });
+  } catch (err) {
+    console.log(err);
+    return res.status(err.statusCode || 500).json({ message: err.message });
+  }
+};
+
+module.exports = { signIn, signUp, like, unLike };
