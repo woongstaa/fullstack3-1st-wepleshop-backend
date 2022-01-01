@@ -1,14 +1,11 @@
-const bcrypt = require('bcrypt');
 const { userDao } = require('../models/');
-
-function compare(reqPassword, dbPassword) {
-  const isSame = bcrypt.compareSync(reqPassword, dbPassword);
-  return isSame;
-}
+const bcrypt = require('bcrypt');
+const token = require('../utils/token');
 
 const signIn = async (email, password) => {
   const user = await userDao.getUserByEmail(email);
-  console.log('user in service: ', user);
+
+  const isSame = bcrypt.compareSync(password, user.password);
 
   if (!user) {
     const error = new Error('INVALID_USER');
@@ -17,25 +14,28 @@ const signIn = async (email, password) => {
     throw error;
   }
 
-  if (!compare(password, user.password)) {
+  if (!isSame) {
     const error = new Error('INVALID_USER');
     error.statusCode = 400;
 
     throw error;
   }
-  return user;
+
+  const signToken = token.signToken(email);
+  return signToken;
 };
 
 const signUp = async (name, email, password) => {
   const userData = await userDao.getUserByEmail(email);
 
   if (userData) {
-    const error = new Error('EMAIL ALREADY EXISTS');
+    const error = new Error('EMAIL IS DUPLICATED');
     error.statusCode = 400;
 
     throw error;
   } else {
-    return userDao.createUser(name, email, password);
+    const hashedPassword = bcrypt.hashSync(password, 10);
+    return userDao.createUser(name, email, hashedPassword);
   }
 };
 
