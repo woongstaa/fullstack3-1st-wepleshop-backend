@@ -38,5 +38,4 @@ const signUp = async (name, email, password) => {
     return userDao.createUser(name, email, hashedPassword);
   }
 };
-
 module.exports = { signIn, signUp };
