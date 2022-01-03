@@ -14,10 +14,10 @@ const getCategories = async () => {
 const getSubCategories = async () => {
   const category = await prisma.$queryRaw`
     SELECT
-      categories.id As category_id,
+      categories.id As categoryId,
       categories.name As category,
-      sub_categories.id As sub_category_id,
-      sub_categories.name AS sub_category
+      sub_categories.id As subCategoryId,
+      sub_categories.name AS subCategory
     FROM
       categories
     JOIN
@@ -31,10 +31,10 @@ const getSubCategories = async () => {
 const findCategories = async (category_id, sub_category_id) => {
   const category = await prisma.$queryRaw`
   SELECT
-    categories.id As category_id,
+    categories.id As categoryId,
     categories.name As category,
-    sub_categories.id As sub_category_id,
-    sub_categories.name AS sub_category
+    sub_categories.id As subCategoryId,
+    sub_categories.name AS subCategory
   FROM
     categories
   JOIN
