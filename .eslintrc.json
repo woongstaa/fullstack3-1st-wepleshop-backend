@@ -4,12 +4,5 @@
     "es6": true,
     "node": true
   },
-  "extends": [
-    "airbnb",
-    "eslint:recommended",
-    "plugin:prettier/recommended"
-  ],
-  // prettier/react 추가
-  "rules": {
-  }
+  "extends": ["airbnb", "eslint:recommended", "plugin:prettier/recommended"]
 }

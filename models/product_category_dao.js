@@ -28,6 +28,7 @@ const getSubCategories = async () => {
   return category;
 };
 
+<<<<<<< HEAD
 const findCategories = async (category_id, sub_category_id) => {
   const category = await prisma.$queryRaw`
   SELECT
@@ -50,3 +51,6 @@ const findCategories = async (category_id, sub_category_id) => {
 };
 
 module.exports = { getCategories, getSubCategories, findCategories };
+=======
+module.exports = { getCategories, getSubCategories };
+>>>>>>> develop

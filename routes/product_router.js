@@ -8,7 +8,6 @@ const {
 } = require('../controllers');
 
 router.get('/details', productDetailController.productDetail);
-
 router.get('/list', productListController.productList);
 
 router.get('/category', productCategoryController.categories);
