@@ -1,14 +1,11 @@
-const bcrypt = require('bcrypt');
 const { userDao } = require('../models/');
-
-function compare(reqPassword, dbPassword) {
-  const isSame = bcrypt.compareSync(reqPassword, dbPassword);
-  return isSame;
-}
+const bcrypt = require('bcrypt');
+const token = require('../utils/token');
 
 const signIn = async (email, password) => {
   const user = await userDao.getUserByEmail(email);
-  console.log('user in service: ', user);
+
+  const isSame = bcrypt.compareSync(password, user.password);
 
   if (!user) {
     const error = new Error('INVALID_USER');
@@ -17,13 +14,14 @@ const signIn = async (email, password) => {
     throw error;
   }
 
-  if (!compare(password, user.password)) {
+  if (!isSame) {
     const error = new Error('INVALID_USER');
     error.statusCode = 400;
 
     throw error;
   }
-  return user;
+  const signToken = token.signToken(user.email); // 위 기준 모두 만족 시 토큰 발급
+  return signToken;
 };
 
 const signUp = async (name, email, password) => {
@@ -34,9 +32,35 @@ const signUp = async (name, email, password) => {
     error.statusCode = 400;
 
     throw error;
-  } else {
-    return userDao.createUser(name, email, password);
   }
+
+  const hashedPassword = bcrypt.hashSync(password, 10);
+  return await userDao.createUser(name, email, hashedPassword);
 };
 
-module.exports = { signIn, signUp };
+const like = async (user_id, product_id) => {
+  const likeData = await userDao.likeExist(user_id, product_id);
+
+  if (likeData) {
+    const error = new Error('ALREADY LIKED BY USER');
+    error.statusCode = 400;
+
+    throw error;
+  }
+  return await userDao.like(user_id, product_id);
+};
+
+const unLike = async (user_id, product_id) => {
+  const likeData = await userDao.likeExist(user_id, product_id);
+
+  if (!likeData) {
+    const error = new Error('ALREADY IS NOT LIKED');
+    error.statusCode = 400;
+
+    throw error;
+  }
+
+  return await userDao.unLike(user_id, product_id);
+};
+
+module.exports = { signIn, signUp, like, unLike };
