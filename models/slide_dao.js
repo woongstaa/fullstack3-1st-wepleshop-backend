@@ -1,8 +1,16 @@
 const prisma = require('./index');
 
-const productList = async (id) => {
-  const slide = await prisma.$query`
+const slide = async () => {
+  const slider = await prisma.$queryRaw`
   SELECT
-    slides.id
+    slides.id,
+    slides.title,
+    slides.description,
+    slides.img_url,
+  FROM
+    slides
   `;
+  return slider;
 };
+
+module.exports = { slide };

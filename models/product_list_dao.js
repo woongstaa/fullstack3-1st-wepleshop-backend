@@ -6,7 +6,7 @@ const productList = async (id) => {
       products.id as product_id,
       products.name as product_name,
       products.price,
-      product_imgs.img_url 
+      product_imgs.img_url
     FROM
       products
     JOIN
