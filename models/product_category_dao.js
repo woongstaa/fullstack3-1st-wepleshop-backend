@@ -29,3 +29,4 @@ const getSubCategories = async () => {
 };
 
 module.exports = { getCategories, getSubCategories };
+
