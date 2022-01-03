@@ -1,11 +1,7 @@
 const { productListDao } = require('../models');
 
-const productList = async (categoryId, subCategoryId, sortWord) => {
-  let sortOption = "";
-  if (sortWord === "popular") {
-    sortOption = "ORDER BY like_count DESC";
-  }
-  const list = await productListDao.productList(categoryId, subCategoryId, sortOption);
+const productList = async (id) => {
+  const list = await productListDao.productList(id);
 
   if (!list) {
     const error = new Error('LIST NOT FOUND');
