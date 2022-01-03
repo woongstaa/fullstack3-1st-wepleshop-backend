@@ -9,13 +9,13 @@ const productList = async (categoryId, subCategoryId, sortOption) => {
       products.name as productName,
       products.price,
       products.like_count as likeCount,
-      product_imgs.img_url as imgUrl 
-    FROM 
+      product_imgs.img_url as imgUrl
+    FROM
       products
-    JOIN 
+    JOIN
       product_imgs ON products.id = product_imgs.product_id
-    WHERE 
-      if (${subCategoryId}, 
+    WHERE
+      if (${subCategoryId},
           products.category_id = ${categoryId} and products.subcategory_id = ${subCategoryId} , 
           products.category_id = ${categoryId})
     ${raw(sortOption)}`;
