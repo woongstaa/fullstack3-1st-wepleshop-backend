@@ -3,12 +3,12 @@ const prisma = require('./index');
 const slide = async () => {
   const slider = await prisma.$queryRaw`
   SELECT
-    slides.id,
-    slides.title,
-    slides.description,
-    slides.img_url,
+    id,
+    title,
+    description,
+    img_url
   FROM
-    slides
+    slides;
   `;
   return slider;
 };
