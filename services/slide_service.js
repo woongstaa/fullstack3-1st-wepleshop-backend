@@ -1,6 +1,6 @@
 const { slideDao } = require('../models');
 
-const slide = async (id) => {
+const slide = async () => {
   const slider = await slideDao.slide();
 
   if (!slider) {
