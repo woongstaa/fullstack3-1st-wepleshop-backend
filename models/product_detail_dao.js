@@ -10,7 +10,7 @@ const productDetail = async (id) => {
       product_colors.name as colorName,
       product_colors.hex as colorHex,
       product_sizes.name as sizeName,
-      product_imgs.imgUrl
+      product_imgs.img_Url
     FROM products
     JOIN product_imgs ON products.id = product_imgs.product_id
     JOIN product_details ON products.id = product_details.product_id
