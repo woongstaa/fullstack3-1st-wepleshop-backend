@@ -33,7 +33,7 @@ const signUp = async (req, res) => {
     }
 
     const checkId = email.includes('@') ? true : false; // ID, Password 유효성 검증
-    const checkPw = password.length >= 8 ? true : false;
+    const checkPw = password.length >= 6 ? true : false;
 
     if (!checkId || !checkPw) {
       const error = new Error('CHECK YOUR EMAIL OR PASSWORD AGAIN');
