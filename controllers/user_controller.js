@@ -33,7 +33,7 @@ const signUp = async (req, res) => {
     }
 
     const checkId = email.includes('@') ? true : false; // ID, Password 유효성 검증
-    const checkPw = password.length >= 8 ? true : false;
+    const checkPw = password.length >= 6 ? true : false;
 
     if (!checkId || !checkPw) {
       const error = new Error('CHECK YOUR EMAIL OR PASSWORD AGAIN');
@@ -44,7 +44,9 @@ const signUp = async (req, res) => {
 
     const user = await userService.signUp(name, email, password);
 
-    return res.status(200).json({ message: 'REGISTER_SUCCEES' });
+    return res
+      .status(201)
+      .json({ message: 'REGISTER_SUCCEES', email, password });
   } catch (err) {
     console.log(err);
     return res.status(err.statusCode || 500).json({ message: err.message });
