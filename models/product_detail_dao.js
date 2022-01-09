@@ -7,7 +7,7 @@ const productDetail = async (productId) => {
       products.name as productName,
       products.price as productPrice,
       product_details.quantity as productQuantity,
-      product_colors.name as colorName,
+      product_colors.english_name as colorName,
       product_colors.hex as colorHex,
       product_sizes.name as sizeName,
       product_imgs.img_Url as imgUrl
