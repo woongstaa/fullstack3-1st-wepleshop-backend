@@ -24,9 +24,11 @@ const productList = async (categoryId, subCategoryId, sortOption) => {
     JOIN
       product_imgs ON products.id = product_imgs.product_id
     WHERE
-      if (${subCategoryId},
-          products.category_id = ${categoryId} and products.subcategory_id = ${subCategoryId} , 
-          products.category_id = ${categoryId})
+      CASE 
+      WHEN ${categoryId} and ${subCategoryId} THEN products.category_id = ${categoryId} and products.subcategory_id = ${subCategoryId}
+      WHEN ${categoryId} and !${subCategoryId} THEN products.category_id = ${categoryId}
+      ELSE TRUE
+      END
     ${raw(sortOption)}`;
   return list;
 };
