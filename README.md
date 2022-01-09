@@ -6,7 +6,7 @@
 
 ### 개발 인원 및 기간
 
-- 개발기간 : 2021/12/27 ~ 2022/1/14
+- 개발기간 : 2021/12/27 ~ 2022/1/7
 - 개발 인원 : 이진웅, 최종민, 장종현, 박효상, 김영욱
 - [프론트 github 링크](https://github.com/wecode-bootcamp-korea/fullstack3-1st-wepleshop-frontend)
 - [백엔드 github 링크](https://github.com/wecode-bootcamp-korea/fullstack3-1st-wepleshop-backend)
@@ -17,7 +17,7 @@
 
 ### 데모 영상(이미지 클릭)
 
-_유투브 영상 링크나 캡쳐 이미지 넣어주세요._
+<img width="1440" alt="스크린샷 2022-01-09 오후 3 10 41" src="https://user-images.githubusercontent.com/92710433/148671374-b0bd46c7-5d63-497f-bf05-b446d03c026a.png">
 
 <br>
 
@@ -25,27 +25,29 @@ _유투브 영상 링크나 캡쳐 이미지 넣어주세요._
 
 ### 적용 기술
 
-> - Front-End : React.js, sass, react-slick, react-modal
+> - Front-End : React.js, sass
 > - Back-End : Node.js, Express, Prisma, nodemon, JWT, Bcrypt, My SQL, CORS
 > - Common : RESTful API
 > - Community Tools : Slack, Zoom, Notion
 
 ### 구현 기능
 
-#### 공통
+- MySQL을 이용해 데이터베이스 관리
 
-- 회원가입 / 로그인
-- footer / nav
+- 로그인, 회원가입 API
 
-#### 메인 페이지
+  - 유효성 검증 기능
+  - JWT을 활용한 토큰 발행
+  - Bcrypt를 활용한 비밀번호 암호화
 
-- 추천 상품, 오늘의 상품, 베스트 상품 모두 각각 api 호출하여 구현
-- 실시간 인기 상품 순위 api 호출하여 구현
-- Carousel 구현
+- 카테고리 API
+  - 1차 카테고리, 2차 카테고리 리스트
+- 상품 리스트 & 필터링 & 정렬 API
 
-#### 상세 페이지
+  - 쿼리파라미터를 이용한 상품 리스트 필터링 구현
 
-- 제품 사이즈, 색상, 수량 설정
+- 상품 상세 API
+  - 특정 상품의 재고, 색상, 사이즈, 이미지 호출
 
 ## Reference
 
