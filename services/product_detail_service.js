@@ -1,7 +1,7 @@
 const { productDetailDao } = require('../models');
 
-const productDetail = async (id) => {
-  const detail = await productDetailDao.productDetail(id);
+const productDetail = async (productId) => {
+  const detail = await productDetailDao.productDetail(productId);
 
   if (!detail) {
     const error = new Error('DATA NOT FOUND');

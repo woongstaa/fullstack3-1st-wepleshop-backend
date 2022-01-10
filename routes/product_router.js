@@ -8,7 +8,8 @@ const {
   slideController,
 } = require('../controllers');
 
-router.get('/details', productDetailController.productDetail);
+
+router.post('/details', productDetailController.productDetail);
 router.get('/list', productListController.productList);
 router.get('/slide', slideController.slide);
 

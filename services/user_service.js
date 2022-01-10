@@ -20,7 +20,7 @@ const signIn = async (email, password) => {
 
     throw error;
   }
-  const signToken = token.signToken(user.email); // 위 기준 모두 만족 시 토큰 발급
+  const signToken = token.signToken(user.email);
   return signToken;
 };
 
@@ -28,7 +28,7 @@ const signUp = async (name, email, password) => {
   const userData = await userDao.getUserByEmail(email);
 
   if (userData) {
-    const error = new Error('EMAIL ALREADY EXISTS');
+    const error = new Error('EMAIL IS DUPLICATED');
     error.statusCode = 400;
 
     throw error;

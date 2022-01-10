@@ -2,9 +2,8 @@ const { productDetailService } = require('../services');
 
 const productDetail = async (req, res) => {
   try {
-    const { id } = req.body;
-
-    const detail = await productDetailService.productDetail(id);
+    const { productId } = req.query;
+    const detail = await productDetailService.productDetail(productId);
 
     return res.status(200).json(detail);
   } catch (err) {

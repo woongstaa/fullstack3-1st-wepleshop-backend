@@ -3,7 +3,7 @@ const { slideService } = require('../services');
 const slide = async (req, res) => {
   try {
     const productSlide = await slideService.slide();
-    console.log(1);
+    
     return res.status(200).json({ message: 'Slide', productSlide });
   } catch (err) {
     console.log(err);
