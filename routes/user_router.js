@@ -5,6 +5,6 @@ const { userController } = require('../controllers');
 
 router.post('/signin', userController.signIn);
 router.post('/signup', userController.signUp);
-router.post('/like', userController.like);
-router.delete('/unlike', userController.unLike);
+router.post('/like', userController.likeAndUnlike);
+// router.delete('/unlike', userController.unLike);
 module.exports = router;

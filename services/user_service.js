@@ -38,29 +38,33 @@ const signUp = async (name, email, password) => {
   return await userDao.createUser(name, email, hashedPassword);
 };
 
-const like = async (user_id, product_id) => {
-  const likeData = await userDao.likeExist(user_id, product_id);
-
-  if (likeData) {
-    const error = new Error('ALREADY LIKED BY USER');
-    error.statusCode = 400;
-
-    throw error;
-  }
-  return await userDao.like(user_id, product_id);
+const likeAndUnlike = async (user_id, product_id) => {
+  return await userDao.likeAndUnlike(user_id, product_id);
 };
 
-const unLike = async (user_id, product_id) => {
-  const likeData = await userDao.likeExist(user_id, product_id);
+// const likeAndUnlike = async (user_id, product_id) => {
+//   userDao.likeAndUnlike(user_id, product_id);
 
-  if (!likeData) {
-    const error = new Error('ALREADY IS NOT LIKED');
-    error.statusCode = 400;
+//   if (likeData) {
+//     const error = new Error('ALREADY LIKED BY USER');
+//     error.statusCode = 400;
 
-    throw error;
-  }
+//     throw error;
+//   }
+//   return await userDao.like(user_id, product_id);
+// };
 
-  return await userDao.unLike(user_id, product_id);
-};
+// const unLike = async (user_id, product_id) => {
+//   const likeData = await userDao.likeExist(user_id, product_id);
 
-module.exports = { signIn, signUp, like, unLike };
+//   if (!likeData) {
+//     const error = new Error('ALREADY IS NOT LIKED');
+//     error.statusCode = 400;
+
+//     throw error;
+//   }
+
+//   return await userDao.unLike(user_id, product_id);
+// };
+
+module.exports = { signIn, signUp, likeAndUnlike };

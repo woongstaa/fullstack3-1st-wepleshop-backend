@@ -2,15 +2,15 @@ const { productCartService } = require('../services');
 
 const productCart = async (req, res) => {
   try {
-    const { productId, color, size, quantity } = req.query;
-    const cart = await productCartService.productDetail(
+    const { productId, color, size, quantity } = req.body;
+    const cart = await productCartService.productCartService(
       productId,
       color,
       size,
       quantity
     );
 
-    return res.status(200).json(detail);
+    return res.status(200).json(cart);
   } catch (err) {
     console.log(err);
 

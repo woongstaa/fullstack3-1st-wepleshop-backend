@@ -1,25 +1,45 @@
 const prisma = require('./index');
 
-const productCart = async (productId) => {
-  const detail = await prisma.$queryRaw`
-    SELECT
-      products.id as productId,
-      products.name as productName,
-      products.price as productPrice,
-      product_details.quantity as productQuantity,
-      product_colors.english_name as colorName,
-      product_colors.hex as colorHex,
-      product_sizes.name as sizeName,
-      product_imgs.img_Url as imgUrl
+const productCart = async (productId, color, size, quantity) => {
+  const [duplicate] = await prisma.$queryRaw`
+    SELECT 
+        * 
+      FROM 
+        product_carts 
+      WHERE 
+        product_id=${productId} 
+      AND
+        product_color_english_name=${color} 
+      AND
+        product_size_name=${size}
+  `;
 
-    FROM products
-    JOIN product_imgs ON products.id = product_imgs.product_id
-    JOIN product_details ON products.id = product_details.product_id
-    JOIN product_colors ON product_colors.id = product_details.color_id
-    JOIN product_sizes ON product_sizes.id = product_details.size_id
-    WHERE products.id = ${productId}`;
+  if (duplicate) {
+    await prisma.$queryRaw`
+    UPDATE 
+      product_carts 
+    SET 
+      quantity=quantity+${quantity}
+    WHERE 
+      product_id=${productId} 
+    AND
+      product_color_english_name=${color} 
+    AND
+       product_size_name=${size}
+    `;
 
-  return detail;
+    return '중복된 제품의 수량이 장바구니에 추가되었습니다.';
+  } else {
+    await prisma.$queryRaw`
+    INSERT INTO
+      product_carts (product_id, product_color_english_name, product_size_name, quantity)
+    VALUES
+      (${productId}, ${color}, ${size}, ${quantity})
+
+    `;
+
+    return '제품이 장바구니에 추가되었습니다.';
+  }
 };
 
 module.exports = { productCart };

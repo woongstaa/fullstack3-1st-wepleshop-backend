@@ -1,14 +1,14 @@
 const { productCartDao } = require('../models');
 
-const productCartService = async (productId) => {
-  const cart = await productCartDao.productCart(productId);
+const productCartService = async (productId, color, size, quantity) => {
+  const cart = await productCartDao.productCart(
+    productId,
+    color,
+    size,
+    quantity
+  );
 
-  if (!detail) {
-    const error = new Error('DATA NOT FOUND');
-    throw error;
-  }
-
-  return detail;
+  return cart;
 };
 
 module.exports = { productCartService };
