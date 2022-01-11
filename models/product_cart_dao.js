@@ -15,7 +15,7 @@ const productCart = async (userId, productId, color, size, quantity) => {
       AND
         size=${size}
       AND
-        user_id=${1}
+        user_id=${userId}
   `;
 
   if (duplicate) {
