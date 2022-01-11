@@ -22,12 +22,21 @@ const productDuplicate = async (userId, productId, color, size) => {
   return duplicate;
 };
 
-const productCartAdd = async (userId, productId, color, quantity, size) => {
+const productCartAdd = async (
+  userId,
+  productId,
+  color,
+  quantity,
+  size,
+  name,
+  price,
+  image
+) => {
   await prisma.$queryRaw`
   INSERT INTO
-    carts (user_id,product_id, color, quantity, size)
+    carts (user_id,product_id, color, quantity, size, name, price, image)
   VALUES
-    (${userId}, ${productId}, ${color}, ${quantity}, ${size})
+    (${userId}, ${productId}, ${color}, ${quantity}, ${size}, ${name}, ${price}, ${image})
   `;
   return '제품이 장바구니에 추가되었습니다.';
 };
@@ -100,14 +109,17 @@ const productCartGet = async (userId) => {
     carts.product_id,
     carts.color,
     carts.quantity,
-    carts.size
+    carts.size,
+    carts.name,
+    carts.price,
+    carts.image
   FROM 
     carts
   WHERE
     carts.user_id = ${userId}
   `;
   return cart;
-}
+};
 
 const getUserIdByEmail = async (email) => {
   const [userId] = await prisma.$queryRaw`
