@@ -2,23 +2,23 @@ const prisma = require('./index');
 
 const productDuplicate = async (userId, productId, color, size) => {
   const [duplicate] = await prisma.$queryRaw`
-    SELECT 
-      user_id,
-      product_id,
-      color,
-      quantity,
-      size
-    FROM 
-      carts 
-    WHERE 
-      user_id=${userId}
-    AND
-      product_id=${productId} 
-    AND
-      color=${color} 
-    AND
-      size=${size};
-`;
+  SELECT 
+    carts.user_id,
+    carts.product_id,
+    carts.color,
+    carts.quantity,
+    carts.size
+  FROM 
+    carts 
+  WHERE 
+    carts.user_id=${userId}
+  AND
+    carts.product_id=${productId} 
+  AND
+    carts.color=${color} 
+  AND
+    carts.size=${size}
+  `;
   return duplicate;
 };
 
@@ -51,8 +51,6 @@ const productCartAddDuplicate = async (
     AND
       color=${color} 
     AND
-      quantity=${quantity}
-    AND
       size=${size};
     `;
 
@@ -76,7 +74,7 @@ const productCartDelete = async (userId, productId, color, size) => {
   return '제품이 장바구니에서 삭제되었습니다.';
 };
 
-const productCartEdit = async (userId, productId, color, size, quantity) => {
+const productCartEdit = async (userId, productId, color, quantity, size) => {
   await prisma.$queryRaw`
     UPDATE 
       carts 
