@@ -4,17 +4,22 @@ const token = require('../utils/token');
 
 const productCartAdd = async (userId, productId, color, size, quantity) => {
   const decodedUserEmail = token.verifyToken(userId).id;
+  console.log('decodeduseremail:', decodedUserEmail);
   const emailToUserId = await productCartDao.getUserIdByEmail(decodedUserEmail);
+  console.log('emailtouserid:', emailToUserId);
   const decodedUserId = emailToUserId['id'];
+  console.log('decodeduserid:', decodedUserId);
+  console.log('service before');
   const duplicate = await productCartDao.productDuplicate(
     decodedUserId,
     productId,
     color,
     size
   );
-
+  console.log('service after');
+  console.log(duplicate);
   if (duplicate) {
-    return productCartAddDuplicate(
+    return productCartDao.productCartAddDuplicate(
       decodedUserId,
       productId,
       color,
@@ -22,7 +27,13 @@ const productCartAdd = async (userId, productId, color, size, quantity) => {
       quantity
     );
   }
-  return productCartAdd(decodedUserId, productId, color, size, quantity);
+  return productCartDao.productCartAdd(
+    decodedUserId,
+    productId,
+    color,
+    size,
+    quantity
+  );
 };
 
 const productCartEdit = async (userId, productId, color, size, quantity) => {

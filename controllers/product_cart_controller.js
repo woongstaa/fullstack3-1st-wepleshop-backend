@@ -3,13 +3,16 @@ const { productCartService } = require('../services');
 const productCartAdd = async (req, res) => {
   try {
     const { userId, productId, color, size, quantity } = req.body;
+    console.log('controller before');
+    console.log(userId);
     const cart = await productCartService.productCartAdd(
       userId,
       productId,
       color,
-      size,
-      quantity
+      quantity,
+      size
     );
+    console.log('controller after');
     return res.status(200).json({ message: 'ProductCart', cart });
   } catch (err) {
     console.log(err);
