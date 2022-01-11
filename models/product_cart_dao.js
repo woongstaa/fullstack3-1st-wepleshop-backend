@@ -3,15 +3,17 @@ const prisma = require('./index');
 const productCart = async (productId, color, size, quantity) => {
   const [duplicate] = await prisma.$queryRaw`
     SELECT 
-        * 
-      FROM 
-        product_carts 
-      WHERE 
-        product_id=${productId} 
-      AND
-        product_color_english_name=${color} 
-      AND
-        product_size_name=${size}
+        product_id,
+        product_color_english_name,
+        product_size_name
+    FROM 
+      product_carts 
+    WHERE 
+      product_id=${productId} 
+    AND
+      product_color_english_name=${color} 
+    AND
+      product_size_name=${size}
   `;
 
   if (duplicate) {
