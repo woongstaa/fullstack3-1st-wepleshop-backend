@@ -23,14 +23,14 @@ const productList = async (categoryId, subCategoryId, sortOption) => {
       sub_categories ON products.subcategory_id = sub_categories.id
     JOIN
       product_imgs ON products.id = product_imgs.product_id
+    CASE
+      WHEN ${categoryId} and ${subCategoryId} THEN products.category_id = ${categoryId} and products.subcategory_id = ${subCategoryId}
+      WHEN ${categoryId} and !${subCategoryId} THEN products.category_id = ${categoryId}
+      ELSE TRUE
+      END
+    ${raw(sortOption)}
    `;
   return list;
 };
-
-// WHERE
-// if (${subCategoryId},
-//     products.category_id = ${categoryId} and products.subcategory_id = ${subCategoryId} ,
-//     products.category_id = ${categoryId})
-// ${raw(sortOption)}
 
 module.exports = { productList };
