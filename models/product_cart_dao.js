@@ -93,6 +93,22 @@ const productCartEdit = async (userId, productId, color, quantity, size) => {
   return '장바구니 내 제품의 수량이 변경되었습니다.';
 };
 
+const productCartGet = async (userId) => {
+  const cart = await prisma.$queryRaw`
+  SELECT 
+    carts.user_id,
+    carts.product_id,
+    carts.color,
+    carts.quantity,
+    carts.size
+  FROM 
+    carts
+  WHERE
+    carts.user_id = ${userId}
+  `;
+  return cart;
+}
+
 const getUserIdByEmail = async (email) => {
   const [userId] = await prisma.$queryRaw`
     SELECT 
@@ -112,4 +128,5 @@ module.exports = {
   productCartAddDuplicate,
   productCartDelete,
   productCartEdit,
+  productCartGet,
 };

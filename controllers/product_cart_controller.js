@@ -32,7 +32,7 @@ const productCartEdit = async (req, res) => {
   } catch (err) {
     console.log(err);
 
-    return res.status(400).json({ message: err.message });
+    return res.status(400).json({ message: 'ProductCartEdit Fail' });
   }
 };
 
@@ -50,8 +50,21 @@ const productCartDelete = async (req, res) => {
   } catch (err) {
     console.log(err);
 
-    return res.status(400).json({ message: err.message });
+    return res.status(400).json({ message: 'ProductCartDelete Fail' });
   }
 };
 
-module.exports = { productCartAdd, productCartEdit, productCartDelete };
+const productCartGet = async (req, res) => {
+  try {
+    const { userId } = req.body;
+    const cart = await productCartService.productCartGet(userId);
+
+    return res.status(200).json({message: 'ProductCart', cart});
+  } catch (err) {
+    console.log(err);
+
+    return res.status(400).json({ message: 'ProductCartGet Fail' });
+  }
+};
+
+module.exports = { productCartAdd, productCartEdit, productCartDelete, productCartGet };

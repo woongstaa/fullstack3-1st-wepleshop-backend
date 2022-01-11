@@ -76,8 +76,25 @@ const productCartDelete = async (userId, productId, color, size) => {
   } else return '수정할 제품이 장바구니에 존재하지 않습니다.';
 };
 
+const productCartGet = async (userId) => {
+  const decodedUserEmail = token.verifyToken(userId).id;
+  const emailToUserId = await productCartDao.getUserIdByEmail(decodedUserEmail);
+  const decodedUserId = emailToUserId['id'];
+  
+  const cart = await productCartDao.productCartGet(decodedUserId);
+
+  if (!cart) {
+    const error = new Error('CART NOT FOUND');
+    error.statusCode = 400;
+    throw error;
+  }
+
+  return cart; 
+};
+
 module.exports = {
   productCartAdd,
   productCartDelete,
   productCartEdit,
+  productCartGet,
 };
