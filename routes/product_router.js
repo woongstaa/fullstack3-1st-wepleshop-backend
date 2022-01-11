@@ -7,6 +7,7 @@ const {
   productListController,
   slideController,
   productCartController,
+  flowController,
 } = require('../controllers');
 
 router.post('/details', productDetailController.productDetail);
