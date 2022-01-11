@@ -23,7 +23,8 @@ const productList = async (categoryId, subCategoryId, sortOption) => {
       sub_categories ON products.subcategory_id = sub_categories.id
     JOIN
       product_imgs ON products.id = product_imgs.product_id
-    CASE
+    WHERE 
+      CASE
       WHEN ${categoryId} and ${subCategoryId} THEN products.category_id = ${categoryId} and products.subcategory_id = ${subCategoryId}
       WHEN ${categoryId} and !${subCategoryId} THEN products.category_id = ${categoryId}
       ELSE TRUE
