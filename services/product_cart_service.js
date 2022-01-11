@@ -1,7 +1,7 @@
 const { productCartDao } = require('../models');
 
-const productCartService = async (productId, color, size, quantity) => {
-  const cart = await productCartDao.productCart(
+const productCartAdd = async (productId, color, size, quantity) => {
+  const cart = await productCartDao.productCartAdd(
     productId,
     color,
     size,
@@ -11,4 +11,25 @@ const productCartService = async (productId, color, size, quantity) => {
   return cart;
 };
 
-module.exports = { productCartService };
+const productCartEdit = async (productId, color, size, quantity) => {
+  const cart = await productCartDao.productCartEdit(
+    productId,
+    color,
+    size,
+    quantity
+  );
+
+  return cart;
+};
+
+const productCartDelete = async (productId, color, size, quantity) => {
+  const cart = await productCartDao.productCartDelete(
+    productId,
+    color,
+    size,
+    quantity
+  );
+  return cart;
+};
+
+module.exports = { productCartAdd, productCartDelete, productCartEdit };
