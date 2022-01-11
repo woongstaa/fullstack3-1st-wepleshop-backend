@@ -5,8 +5,8 @@ const productDuplicate = async (userId, productId, color, size) => {
     SELECT 
       user_id,
       product_id,
-      product_color_english_name,
-      product_size_name,
+      color,
+      size,
       quantity
     FROM 
       carts 
@@ -17,8 +17,7 @@ const productDuplicate = async (userId, productId, color, size) => {
     AND
       color=${color} 
     AND
-      size=${size}
-    AND
+      size=${size};
 `;
   return duplicate;
 };
@@ -55,7 +54,7 @@ const productCartAddDuplicate = async (
     AND
       size=${size}
     AND
-      quantity=${quantity}
+      quantity=${quantity};
     `;
 
   return '중복된 제품의 수량이 장바구니에 추가되었습니다.';
@@ -68,11 +67,11 @@ const productCartDelete = async (userId, productId, color, size) => {
     WHERE
       product_id=${productId} 
     AND
-      product_color_english_name=${color} 
+      color=${color} 
     AND
-       product_size_name=${size}
+       size=${size}
     AND
-       user_id=${userId}
+       user_id=${userId};
     `;
 
   return '제품이 장바구니에서 삭제되었습니다.';
@@ -87,11 +86,11 @@ const productCartEdit = async (userId, productId, color, size, quantity) => {
     WHERE 
       product_id=${productId} 
     AND
-      product_color_english_name=${color} 
+      color=${color} 
     AND
-       product_size_name=${size}
+       size=${size}
     AND
-       user_id=${userId}
+       user_id=${userId};
     `;
 
   return '장바구니 내 제품의 수량이 변경되었습니다.';
