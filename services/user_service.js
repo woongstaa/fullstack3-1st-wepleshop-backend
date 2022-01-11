@@ -39,7 +39,10 @@ const signUp = async (name, email, password) => {
 };
 
 const likeAndUnlike = async (user_id, product_id) => {
-  return await userDao.likeAndUnlike(user_id, product_id);
+  const decodedUserEmail = token.verifyToken(user_id).id;
+  const emailToUserId = await productCartDao.getUserIdByEmail(decodedUserEmail);
+  const decodedUserId = emailToUserId['id'];
+  return await userDao.likeAndUnlike(decodedUserId, product_id);
 };
 
 // const likeAndUnlike = async (user_id, product_id) => {
