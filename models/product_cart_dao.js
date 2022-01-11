@@ -5,7 +5,8 @@ const productCart = async (productId, color, size, quantity) => {
     SELECT 
         product_id,
         product_color_english_name,
-        product_size_name
+        product_size_name,
+        quantity
     FROM 
       product_carts 
     WHERE 
