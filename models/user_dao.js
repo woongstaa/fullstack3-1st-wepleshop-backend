@@ -23,36 +23,33 @@ const createUser = async (name, email, password) => {
   return createData;
 };
 
-const like = async (user_id, product_id) => {
-  const like = await prisma.$queryRaw`
-    INSERT INTO
-      likes (product_id, user_id)
-    VALUES
-      (${product_id}, ${user_id});
-    `;
-  return like;
-};
-
-const unLike = async (user_id, product_id) => {
-  const unLike = await prisma.$queryRaw`
-    DELETE FROM
-      likes
-    WHERE
-      product_id=${product_id} and user_id=${user_id}
-    `;
-  return unLike;
-};
-
-const likeExist = async (user_id, product_id) => {
+const likeAndUnlike = async (user_id, product_id) => {
   const [likeExist] = await prisma.$queryRaw`
     SELECT 
       user_id,product_id
     FROM
-      likes
+      users_isLikes
     WHERE
       user_id=${user_id} and product_id=${product_id}
   `;
-  return likeExist;
+
+  if (!likeExist) {
+    await prisma.$queryRaw`
+    INSERT INTO
+      users_isLikes (user_id, product_id)
+    VALUES
+      (${user_id}, ${product_id});
+    `;
+    return '좋아요 버튼을 누르셨습니다.';
+  } else {
+    await prisma.$queryRaw`
+    DELETE FROM
+      users_isLikes
+    WHERE
+      user_id=${user_id} and product_id=${product_id}
+    `;
+    return '좋아요를 취소하셨습니다.';
+  }
 };
 
-module.exports = { getUserByEmail, createUser, like, unLike, likeExist };
+module.exports = { getUserByEmail, createUser, likeAndUnlike };
