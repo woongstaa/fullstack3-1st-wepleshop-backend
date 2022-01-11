@@ -10,7 +10,6 @@ const productCart = async (req, res) => {
       size,
       quantity
     );
-    
     return res.status(200).json({ message: 'ProductCart', cart });
   } catch (err) {
     console.log(err);

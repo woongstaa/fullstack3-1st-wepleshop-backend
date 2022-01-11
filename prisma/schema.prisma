@@ -39,6 +39,7 @@ model product_sizes {
 model product_colors {
   id              Int               @id @default(autoincrement())
   name            String            @db.VarChar(100)
+  english_name    String            @db.VarChar(100)
   hex             String            @db.VarChar(10)
   product_details product_details[]
 }
