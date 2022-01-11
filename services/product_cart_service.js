@@ -1,14 +1,19 @@
 const { productCartDao } = require('../models');
+const token = require('../utils/token');
 
-const productCartService = async (productId, color, size, quantity) => {
-  const cart = await productCartDao.productCart(
-    productId,
-    color,
-    size,
-    quantity
-  );
+const productCart = async (userId, productId, color, size, quantity) => {
+  
+  const decodedUserEmail = token.verifyToken(userId).id;
+  const emailToUserId = await productCartDao.getUserIdByEmail(decodedUserEmail);
+  const decodedUserId = emailToUserId["id"];
+  const cart = await productCartDao.productCart(decodedUserId, productId, color, size, quantity);
 
+  if (!cart) {
+    const error = new Error('CART NOT FOUND');
+    error.statusCode = 400;
+    throw error;
+  }
   return cart;
 };
 
-module.exports = { productCartService };
+module.exports = { productCart };
