@@ -16,6 +16,7 @@ model users {
   email         String          @unique
   password      String
   users_isLikes users_isLikes[]
+  carts         carts[]
 }
 
 model users_isLikes {
@@ -68,6 +69,7 @@ model products {
   product_imgs    product_imgs[]
   product_details product_details[]
   users_isLikes   users_isLikes[]
+  carts           carts[]
   categories      categories        @relation(fields: [category_id], references: [id])
   sub_categories  sub_categories    @relation(fields: [subcategory_id], references: [id])
 
@@ -103,4 +105,15 @@ model slides {
   title       String @db.VarChar(200)
   img_url     String
   description String @db.VarChar(1000)
+}
+
+model carts {
+  id         Int      @id @default(autoincrement())
+  user_id    Int
+  product_id Int
+  color      String
+  size       String
+  quantity   Int
+  users      users    @relation(fields: [user_id], references: [id])
+  products   products @relation(fields: [product_id], references: [id])
 }
