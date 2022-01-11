@@ -2,26 +2,26 @@ const { productCartService } = require('../services');
 
 const productCartAdd = async (req, res) => {
   try {
-    const { productId, color, size, quantity } = req.body;
+    const { userId, productId, color, size, quantity } = req.body;
     const cart = await productCartService.productCartAdd(
+      userId,
       productId,
       color,
       size,
       quantity
     );
-
-    return res.status(200).json(cart);
+    return res.status(200).json({ message: 'ProductCart', cart });
   } catch (err) {
     console.log(err);
-
-    return res.status(400).json({ message: err.message });
+    return res.status(500).json({ message: 'ProductCart Load Fail' });
   }
 };
 
 const productCartEdit = async (req, res) => {
   try {
-    const { productId, color, size, quantity } = req.body;
+    const { userId, productId, color, size, quantity } = req.body;
     const cart = await productCartService.productCartEdit(
+      userId,
       productId,
       color,
       size,
@@ -38,12 +38,12 @@ const productCartEdit = async (req, res) => {
 
 const productCartDelete = async (req, res) => {
   try {
-    const { productId, color, size, quantity } = req.body;
+    const { userId, productId, color, size } = req.body;
     const cart = await productCartService.productCartDelete(
+      userId,
       productId,
       color,
-      size,
-      quantity
+      size
     );
 
     return res.status(200).json(cart);

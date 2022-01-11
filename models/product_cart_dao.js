@@ -1,72 +1,87 @@
 const prisma = require('./index');
 
-const [duplicate] = await prisma.$queryRaw`
-  SELECT 
+const productDuplicate = async (userId, productId, color, size) => {
+  const [duplicate] = await prisma.$queryRaw`
+    SELECT 
+      user_id,
       product_id,
       product_color_english_name,
       product_size_name,
       quantity
-  FROM 
-    product_carts 
-  WHERE 
-    product_id=${productId} 
-  AND
-    product_color_english_name=${color} 
-  AND
-    product_size_name=${size}
+    FROM 
+      carts 
+    WHERE 
+      user_id=${userId}
+    AND
+      product_id=${productId} 
+    AND
+      color=${color} 
+    AND
+      size=${size}
+    AND
 `;
+  return duplicate;
+};
 
-const productCartAdd = async (productId, color, size, quantity) => {
-  if (duplicate) {
-    await prisma.$queryRaw`
+const productCartAdd = async (userId, productId, color, quantity, size) => {
+  await prisma.$queryRaw`
+  INSERT INTO
+    carts (user_id,product_id, color, quantity, size)
+  VALUES
+    (${userId}, ${productId}, ${color}, ${quantity}, ${size})
+  `;
+
+  return '제품이 장바구니에 추가되었습니다.';
+};
+
+const productCartAddDuplicate = async (
+  userId,
+  productId,
+  color,
+  size,
+  quantity
+) => {
+  await prisma.$queryRaw`
     UPDATE 
-      product_carts 
+     carts 
     SET 
       quantity=quantity+${quantity}
     WHERE 
+      user_id=${userId}
+    AND
       product_id=${productId} 
     AND
-      product_color_english_name=${color} 
+      color=${color} 
     AND
-       product_size_name=${size}
+      size=${size}
+    AND
+      quantity=${quantity}
     `;
 
-    return '중복된 제품의 수량이 장바구니에 추가되었습니다.';
-  } else {
-    await prisma.$queryRaw`
-    INSERT INTO
-      product_carts (product_id, product_color_english_name, product_size_name, quantity)
-    VALUES
-      (${productId}, ${color}, ${size}, ${quantity})
-
-    `;
-
-    return '제품이 장바구니에 추가되었습니다.';
-  }
+  return '중복된 제품의 수량이 장바구니에 추가되었습니다.';
 };
-const productCartDelete = async (productId, color, size, quantity) => {
-  if (duplicate) {
-    await prisma.$queryRaw`
+
+const productCartDelete = async (userId, productId, color, size) => {
+  await prisma.$queryRaw`
     DELETE FROM 
-      product_carts
+      carts
     WHERE
       product_id=${productId} 
     AND
       product_color_english_name=${color} 
     AND
        product_size_name=${size}
+    AND
+       user_id=${userId}
     `;
 
-    return '제품이 장바구니에서 삭제되었습니다.';
-  } else {
-    return '제품이 존재하지 않습니다.';
-  }
+  return '제품이 장바구니에서 삭제되었습니다.';
 };
-const productCartEdit = async (productId, color, size, quantity) => {
-  if (duplicate) {
-    await prisma.$queryRaw`
+
+const productCartEdit = async (userId, productId, color, size, quantity) => {
+  await prisma.$queryRaw`
     UPDATE 
-      product_carts 
+      carts 
     SET 
       quantity=${quantity}
     WHERE 
@@ -75,12 +90,30 @@ const productCartEdit = async (productId, color, size, quantity) => {
       product_color_english_name=${color} 
     AND
        product_size_name=${size}
+    AND
+       user_id=${userId}
     `;
 
-    return '장바구니 내 제품의 수량이 변경되었습니다.';
-  } else {
-    return '장바구니 내 제품이 존재하지 않습니다.';
-  }
+  return '장바구니 내 제품의 수량이 변경되었습니다.';
 };
 
-module.exports = { productCartAdd, productCartDelete, productCartEdit };
+const getUserIdByEmail = async (email) => {
+  const [userId] = await prisma.$queryRaw`
+    SELECT 
+      id 
+    FROM 
+      users 
+    WHERE 
+      email = ${email};
+    `;
+  return userId;
+};
+
+module.exports = {
+  productDuplicate,
+  getUserIdByEmail,
+  productCartAdd,
+  productCartAddDuplicate,
+  productCartDelete,
+  productCartEdit,
+};

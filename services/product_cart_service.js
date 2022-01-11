@@ -1,35 +1,78 @@
 const { productCartDao } = require('../models');
+const { productCartAddDuplicate } = require('../models/product_cart_dao');
+const token = require('../utils/token');
 
-const productCartAdd = async (productId, color, size, quantity) => {
-  const cart = await productCartDao.productCartAdd(
+const productCartAdd = async (userId, productId, color, size, quantity) => {
+  const decodedUserEmail = token.verifyToken(userId).id;
+  const emailToUserId = await productCartDao.getUserIdByEmail(decodedUserEmail);
+  const decodedUserId = emailToUserId['id'];
+  const duplicate = await productCartDao.productDuplicate(
+    decodedUserId,
     productId,
     color,
-    size,
-    quantity
+    size
   );
 
-  return cart;
+  if (duplicate) {
+    return productCartAddDuplicate(
+      decodedUserId,
+      productId,
+      color,
+      size,
+      quantity
+    );
+  }
+  return productCartAdd(decodedUserId, productId, color, size, quantity);
 };
 
-const productCartEdit = async (productId, color, size, quantity) => {
-  const cart = await productCartDao.productCartEdit(
+const productCartEdit = async (userId, productId, color, size, quantity) => {
+  const decodedUserEmail = token.verifyToken(userId).id;
+  const emailToUserId = await productCartDao.getUserIdByEmail(decodedUserEmail);
+  const decodedUserId = emailToUserId['id'];
+  const duplicate = await productCartDao.productDuplicate(
+    decodedUserId,
     productId,
     color,
-    size,
-    quantity
+    size
   );
 
-  return cart;
+  if (duplicate) {
+    const cart = await productCartDao.productCartEdit(
+      decodedUserId,
+      productId,
+      color,
+      size,
+      quantity
+    );
+    return cart;
+  } else return '수정할 제품이 장바구니에 존재하지 않습니다.';
 };
 
-const productCartDelete = async (productId, color, size, quantity) => {
-  const cart = await productCartDao.productCartDelete(
+const productCartDelete = async (userId, productId, color, size) => {
+  const decodedUserEmail = token.verifyToken(userId).id;
+  const emailToUserId = await productCartDao.getUserIdByEmail(decodedUserEmail);
+  const decodedUserId = emailToUserId['id'];
+  const duplicate = await productCartDao.productDuplicate(
+    decodedUserId,
     productId,
     color,
-    size,
-    quantity
+    size
   );
-  return cart;
+
+  if (duplicate) {
+    const cart = await productCartDao.productCartDelete(
+      decodedUserId,
+      productId,
+      color,
+      size
+    );
+    return cart;
+  } else return '수정할 제품이 장바구니에 존재하지 않습니다.';
 };
 
-module.exports = { productCartAdd, productCartDelete, productCartEdit };
+module.exports = {
+  productCartAdd,
+  productCartAddDuplicate,
+  productCartDelete,
+  productCartEdit,
+};

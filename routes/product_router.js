@@ -11,7 +11,7 @@ const {
 
 router.post('/details', productDetailController.productDetail);
 router.post('/cartadd', productCartController.productCartAdd);
-router.post('/cartdelete', productCartController.productCartDelete);
+router.delete('/cartdelete', productCartController.productCartDelete);
 router.post('/cartedit', productCartController.productCartEdit);
 router.get('/list', productListController.productList);
 router.get('/slide', slideController.slide);
