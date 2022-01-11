@@ -3,6 +3,7 @@ const { productCartService } = require('../services');
 const productCart = async (req, res) => {
   try {
     const { userId, productId, color, size, quantity } = req.body;
+    console.log(userId);
     const cart = await productCartService.productCart(
       userId,
       productId,
