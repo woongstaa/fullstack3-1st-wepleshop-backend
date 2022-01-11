@@ -70,4 +70,9 @@ const likeAndUnlike = async (user_id, product_id) => {
 //   return await userDao.unLike(user_id, product_id);
 // };
 
-module.exports = { signIn, signUp, likeAndUnlike };
+const userNameFind = async (userId) => {
+  const decodedUserName = token.verifyToken(userId).id;
+  return await userDao.userNameFind(decodedUserName);
+};
+
+module.exports = { signIn, signUp, likeAndUnlike, userNameFind };
