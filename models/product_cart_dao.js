@@ -2,35 +2,33 @@ const prisma = require('./index');
 
 const productDuplicate = async (userId, productId, color, size) => {
   const [duplicate] = await prisma.$queryRaw`
-    SELECT 
-      user_id,
-      product_id,
-      color,
-      quantity,
-      size
-    FROM 
-      carts 
-    WHERE 
-      user_id=${userId}
-    AND
-      product_id=${productId} 
-    AND
-      color=${color} 
-    AND
-      size=${size};
-`;
+  SELECT 
+    carts.user_id,
+    carts.product_id,
+    carts.color,
+    carts.quantity,
+    carts.size
+  FROM 
+    carts 
+  WHERE 
+    carts.user_id=${userId}
+  AND
+    carts.product_id=${productId} 
+  AND
+    carts.color=${color} 
+  AND
+    carts.size=${size}
+  `;
   return duplicate;
 };
 
 const productCartAdd = async (userId, productId, color, quantity, size) => {
-  console.log('dao before');
   await prisma.$queryRaw`
   INSERT INTO
     carts (user_id,product_id, color, quantity, size)
   VALUES
     (${userId}, ${productId}, ${color}, ${quantity}, ${size})
   `;
-  console.log('dao after');
   return '제품이 장바구니에 추가되었습니다.';
 };
 
@@ -52,8 +50,6 @@ const productCartAddDuplicate = async (
       product_id=${productId} 
     AND
       color=${color} 
-    AND
-      quantity=${quantity}
     AND
       size=${size};
     `;
@@ -78,7 +74,7 @@ const productCartDelete = async (userId, productId, color, size) => {
   return '제품이 장바구니에서 삭제되었습니다.';
 };
 
-const productCartEdit = async (userId, productId, color, size, quantity) => {
+const productCartEdit = async (userId, productId, color, quantity, size) => {
   await prisma.$queryRaw`
     UPDATE 
       carts 
@@ -96,6 +92,22 @@ const productCartEdit = async (userId, productId, color, size, quantity) => {
 
   return '장바구니 내 제품의 수량이 변경되었습니다.';
 };
+
+const productCartGet = async (userId) => {
+  const cart = await prisma.$queryRaw`
+  SELECT 
+    carts.user_id,
+    carts.product_id,
+    carts.color,
+    carts.quantity,
+    carts.size
+  FROM 
+    carts
+  WHERE
+    carts.user_id = ${userId}
+  `;
+  return cart;
+}
 
 const getUserIdByEmail = async (email) => {
   const [userId] = await prisma.$queryRaw`
@@ -116,4 +128,5 @@ module.exports = {
   productCartAddDuplicate,
   productCartDelete,
   productCartEdit,
+  productCartGet,
 };

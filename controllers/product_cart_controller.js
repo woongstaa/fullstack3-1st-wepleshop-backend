@@ -2,9 +2,7 @@ const { productCartService } = require('../services');
 
 const productCartAdd = async (req, res) => {
   try {
-    const { userId, productId, color, size, quantity } = req.body;
-    console.log('controller before');
-    console.log(userId);
+    const { userId, productId, color, quantity, size } = req.body;
     const cart = await productCartService.productCartAdd(
       userId,
       productId,
@@ -12,7 +10,6 @@ const productCartAdd = async (req, res) => {
       quantity,
       size
     );
-    console.log('controller after');
     return res.status(200).json({ message: 'ProductCart', cart });
   } catch (err) {
     console.log(err);
@@ -22,20 +19,20 @@ const productCartAdd = async (req, res) => {
 
 const productCartEdit = async (req, res) => {
   try {
-    const { userId, productId, color, size, quantity } = req.body;
+    const { userId, productId, color, quantity, size } = req.body;
     const cart = await productCartService.productCartEdit(
       userId,
       productId,
       color,
-      size,
-      quantity
+      quantity,
+      size
     );
 
     return res.status(200).json(cart);
   } catch (err) {
     console.log(err);
 
-    return res.status(400).json({ message: err.message });
+    return res.status(400).json({ message: 'ProductCartEdit Fail' });
   }
 };
 
@@ -53,8 +50,21 @@ const productCartDelete = async (req, res) => {
   } catch (err) {
     console.log(err);
 
-    return res.status(400).json({ message: err.message });
+    return res.status(400).json({ message: 'ProductCartDelete Fail' });
   }
 };
 
-module.exports = { productCartAdd, productCartEdit, productCartDelete };
+const productCartGet = async (req, res) => {
+  try {
+    const { userId } = req.body;
+    const cart = await productCartService.productCartGet(userId);
+
+    return res.status(200).json({message: 'ProductCart', cart});
+  } catch (err) {
+    console.log(err);
+
+    return res.status(400).json({ message: 'ProductCartGet Fail' });
+  }
+};
+
+module.exports = { productCartAdd, productCartEdit, productCartDelete, productCartGet };
