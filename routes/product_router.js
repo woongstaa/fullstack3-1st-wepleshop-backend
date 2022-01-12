@@ -14,7 +14,7 @@ router.post('/details', productDetailController.productDetail);
 router.post('/cartadd', productCartController.productCartAdd);
 router.delete('/cartdelete', productCartController.productCartDelete);
 router.post('/cartedit', productCartController.productCartEdit);
-router.get('/cartget', productCartController.productCartGet);
+router.post('/cartget', productCartController.productCartGet);
 router.get('/list', productListController.productList);
 router.get('/slide', slideController.slide);
 router.get('/flow', flowController.flow);
