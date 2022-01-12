@@ -5,7 +5,7 @@ const { userController } = require('../controllers');
 
 router.post('/signin', userController.signIn);
 router.post('/signup', userController.signUp);
-router.post('/like', userController.likeAndUnlike);
+router.post('/likeandunlike', userController.likeAndUnlike);
 // router.delete('/unlike', userController.unLike);
 router.post('/usernamefind', userController.userNameFind);
 
