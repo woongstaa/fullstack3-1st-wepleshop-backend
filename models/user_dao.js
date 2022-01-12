@@ -23,34 +23,38 @@ const createUser = async (name, email, password) => {
   return createData;
 };
 
-const likeAndUnlike = async (user_id, product_id) => {
-  const [likeExist] = await prisma.$queryRaw`
-    SELECT 
-      user_id,product_id
-    FROM
-      users_isLikes
-    WHERE
-      user_id=${user_id} and product_id=${product_id}
+const like = async (user_id, product_id) => { 
+  await prisma.$queryRaw`
+  INSERT INTO
+    users_isLikes (user_id, product_id)
+  VALUES
+    (${user_id}, ${product_id});
   `;
+  return 'LIKED';
+} 
 
-  if (!likeExist) {
-    await prisma.$queryRaw`
-    INSERT INTO
-      users_isLikes (user_id, product_id)
-    VALUES
-      (${user_id}, ${product_id});
-    `;
-    return '좋아요 버튼을 누르셨습니다.';
-  } else {
-    await prisma.$queryRaw`
-    DELETE FROM
-      users_isLikes
-    WHERE
-      user_id=${user_id} and product_id=${product_id}
-    `;
-    return '좋아요를 취소하셨습니다.';
-  }
-};
+const unlike = async (user_id, product_id) => {
+  await prisma.$queryRaw`
+  DELETE FROM
+    users_isLikes
+  WHERE
+    user_id=${user_id} and product_id=${product_id}
+  `;
+  return 'LIKE_CANCELLED';
+}
+
+const doesLikeExist = async (user_id, product_id) => {
+const [likeExist] = await prisma.$queryRaw`
+  SELECT 
+    user_id,product_id
+  FROM
+    users_isLikes
+  WHERE
+    user_id=${user_id} and product_id=${product_id}
+`;
+return likeExist ? true : false; 
+}
+
 
 const getUserIdByEmail = async (email) => {
   const [userId] = await prisma.$queryRaw`
@@ -79,7 +83,9 @@ const userNameFind = async (decodedUserName) => {
 module.exports = {
   getUserByEmail,
   createUser,
-  likeAndUnlike,
+  like,
+  unlike,
+  doesLikeExist,
   getUserIdByEmail,
   userNameFind,
 };
