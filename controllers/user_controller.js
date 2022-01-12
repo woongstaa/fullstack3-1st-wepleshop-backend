@@ -53,48 +53,34 @@ const signUp = async (req, res) => {
   }
 };
 
-const likeAndUnlike = async (req, res) => {
+const like = async (req, res) => {
   try {
     const { user_id, product_id } = req.body;
 
-    const likeAndUnlike = await userService.likeAndUnlike(user_id, product_id);
+    const like = await userService.like(user_id, product_id);
 
-    return res.status(200).json({ message: 'SUCCEES', user_id, product_id });
+    return res
+      .status(200)
+      .json({ message: 'LIKE_SUCCEES', user_id, product_id });
   } catch (err) {
     console.log(err);
     return res.status(err.statusCode || 500).json({ message: err.message });
   }
 };
 
-// const like = async (req, res) => {
-//   try {
-//     const { user_id, product_id } = req.body;
+const unLike = async (req, res) => {
+  try {
+    const { user_id, product_id } = req.body;
+    const unLike = await userService.unLike(user_id, product_id);
 
-//     const like = await userService.like(user_id, product_id);
-
-//     return res
-//       .status(200)
-//       .json({ message: 'LIKE_SUCCEES', user_id, product_id });
-//   } catch (err) {
-//     console.log(err);
-//     return res.status(err.statusCode || 500).json({ message: err.message });
-//   }
-// };
-
-// const unLike = async (req, res) => {
-//   try {
-//     const { user_id, product_id } = req.body;
-
-//     const unLike = await userService.unLike(user_id, product_id);
-
-//     return res
-//       .status(200)
-//       .json({ message: 'UNLIKE_SUCCEES', user_id, product_id });
-//   } catch (err) {
-//     console.log(err);
-//     return res.status(err.statusCode || 500).json({ message: err.message });
-//   }
-// };
+    return res
+      .status(200)
+      .json({ message: 'UNLIKE_SUCCEES', user_id, product_id });
+  } catch (err) {
+    console.log(err);
+    return res.status(err.statusCode || 500).json({ message: err.message });
+  }
+};
 
 const userNameFind = async (req, res) => {
   try {
@@ -109,4 +95,4 @@ const userNameFind = async (req, res) => {
   }
 };
 
-module.exports = { signIn, signUp, likeAndUnlike, userNameFind };
+module.exports = { signIn, signUp, likeAndUnlike, userNameFind, like, unLike };

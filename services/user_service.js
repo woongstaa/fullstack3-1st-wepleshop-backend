@@ -1,4 +1,4 @@
-const { userDao } = require('../models/');
+const { userDao, productCartDao } = require('../models/');
 const bcrypt = require('bcrypt');
 const token = require('../utils/token');
 
@@ -38,41 +38,39 @@ const signUp = async (name, email, password) => {
   return await userDao.createUser(name, email, hashedPassword);
 };
 
-const likeAndUnlike = async (user_id, product_id) => {
+const like = async (user_id, product_id) => {
+  const userId = await decodedUserId(user_id);
+  const likeExist = await doesLikeExist(user_id, product_id);
+  if (!likeExist) {
+    return await userDao.like(userId, product_id); 
+  }
+  return "이미 좋아요를 눌렀습니다";
+};
+
+const unLike = async (user_id, product_id) => {
+  const userId = await decodedUserId(user_id);
+  const likeExist = await doesLikeExist(user_id, product_id);
+  if (likeExist) {
+      return await userDao.unlike(userId, product_id);
+  }
+  return "이미 좋아요 상태가 아닙니다";
+};
+
+const doesLikeExist = async (user_id, product_id) => {
+  const userId = await decodedUserId(user_id);
+  return await userDao.doesLikeExist(userId, product_id); 
+}
+
+const decodedUserId = async (user_id) => {
   const decodedUserEmail = token.verifyToken(user_id).id;
   const emailToUserId = await productCartDao.getUserIdByEmail(decodedUserEmail);
   const decodedUserId = emailToUserId['id'];
-  return await userDao.likeAndUnlike(decodedUserId, product_id);
+  return await decodedUserId;
 };
-
-// const likeAndUnlike = async (user_id, product_id) => {
-//   userDao.likeAndUnlike(user_id, product_id);
-
-//   if (likeData) {
-//     const error = new Error('ALREADY LIKED BY USER');
-//     error.statusCode = 400;
-
-//     throw error;
-//   }
-//   return await userDao.like(user_id, product_id);
-// };
-
-// const unLike = async (user_id, product_id) => {
-//   const likeData = await userDao.likeExist(user_id, product_id);
-
-//   if (!likeData) {
-//     const error = new Error('ALREADY IS NOT LIKED');
-//     error.statusCode = 400;
-
-//     throw error;
-//   }
-
-//   return await userDao.unLike(user_id, product_id);
-// };
 
 const userNameFind = async (userId) => {
   const decodedUserName = token.verifyToken(userId).id;
   return await userDao.userNameFind(decodedUserName);
 };
 
-module.exports = { signIn, signUp, likeAndUnlike, userNameFind };
+module.exports = { signIn, signUp, like, unLike, userNameFind, doesLikeExist };
