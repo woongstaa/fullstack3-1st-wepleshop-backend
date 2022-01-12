@@ -95,4 +95,4 @@ const userNameFind = async (req, res) => {
   }
 };
 
-module.exports = { signIn, signUp, likeAndUnlike, userNameFind, like, unLike };
+module.exports = { signIn, signUp, userNameFind, like, unLike };
