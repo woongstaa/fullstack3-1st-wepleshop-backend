@@ -2,13 +2,17 @@ const { productCartService } = require('../services');
 
 const productCartAdd = async (req, res) => {
   try {
-    const { userId, productId, color, quantity, size } = req.body;
+    const { userId, productId, color, quantity, size, name, price, image } =
+      req.body;
     const cart = await productCartService.productCartAdd(
       userId,
       productId,
       color,
       quantity,
-      size
+      size,
+      name,
+      price,
+      image
     );
     return res.status(200).json({ message: 'ProductCart', cart });
   } catch (err) {
@@ -59,7 +63,7 @@ const productCartGet = async (req, res) => {
     const { userId } = req.body;
     const cart = await productCartService.productCartGet(userId);
 
-    return res.status(200).json({message: 'ProductCart', cart});
+    return res.status(200).json({ message: 'ProductCart', cart });
   } catch (err) {
     console.log(err);
 
@@ -67,4 +71,9 @@ const productCartGet = async (req, res) => {
   }
 };
 
-module.exports = { productCartAdd, productCartEdit, productCartDelete, productCartGet };
+module.exports = {
+  productCartAdd,
+  productCartEdit,
+  productCartDelete,
+  productCartGet,
+};
