@@ -52,6 +52,18 @@ const likeAndUnlike = async (user_id, product_id) => {
   }
 };
 
+const getUserIdByEmail = async (email) => {
+  const [userId] = await prisma.$queryRaw`
+    SELECT 
+      id 
+    FROM 
+      users 
+    WHERE 
+      email = ${email};
+    `;
+  return userId;
+};
+
 const userNameFind = async (decodedUserName) => {
   const [userNameFind] = await prisma.$queryRaw`
     SELECT 
@@ -64,4 +76,10 @@ const userNameFind = async (decodedUserName) => {
   return userNameFind;
 };
 
-module.exports = { getUserByEmail, createUser, likeAndUnlike, userNameFind };
+module.exports = {
+  getUserByEmail,
+  createUser,
+  likeAndUnlike,
+  getUserIdByEmail,
+  userNameFind,
+};

@@ -115,6 +115,9 @@ model carts {
   color      String
   size       String
   quantity   Int
+  name       String
+  price      Int
+  image      String   @db.VarChar(255)
   users      users    @relation(fields: [user_id], references: [id])
   products   products @relation(fields: [product_id], references: [id])
 }

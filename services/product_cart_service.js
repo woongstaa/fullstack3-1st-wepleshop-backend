@@ -1,7 +1,16 @@
 const { productCartDao } = require('../models');
 const token = require('../utils/token');
 
-const productCartAdd = async (userId, productId, color, quantity, size) => {
+const productCartAdd = async (
+  userId,
+  productId,
+  color,
+  quantity,
+  size,
+  name,
+  price,
+  image
+) => {
   const decodedUserEmail = token.verifyToken(userId).id;
   const emailToUserId = await productCartDao.getUserIdByEmail(decodedUserEmail);
   const decodedUserId = emailToUserId['id'];
@@ -19,14 +28,16 @@ const productCartAdd = async (userId, productId, color, quantity, size) => {
       quantity,
       size
     );
-  }
-  else {
+  } else {
     return productCartDao.productCartAdd(
       decodedUserId,
       productId,
       color,
       quantity,
-      size
+      size,
+      name,
+      price,
+      image
     );
   }
 };
@@ -80,7 +91,7 @@ const productCartGet = async (userId) => {
   const decodedUserEmail = token.verifyToken(userId).id;
   const emailToUserId = await productCartDao.getUserIdByEmail(decodedUserEmail);
   const decodedUserId = emailToUserId['id'];
-  
+
   const cart = await productCartDao.productCartGet(decodedUserId);
 
   if (!cart) {
@@ -89,7 +100,7 @@ const productCartGet = async (userId) => {
     throw error;
   }
 
-  return cart; 
+  return cart;
 };
 
 module.exports = {
