@@ -1,14 +1,14 @@
 const { flowDao } = require('../models');
 
 const flow = async () => {
-  const flowSlider = await flowDao.flow();
+  const flowlist = await flowDao.flow();
 
-  if (!flowSlider) {
+  if (!flowlist) {
     const error = new Error('LIST NOT FOUND');
     error.statusCode = 400;
     throw error;
   }
-  return flowSlider;
+  return flowlist;
 };
 
 module.exports = { flow };
