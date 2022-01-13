@@ -1,7 +1,7 @@
 const prisma = require('./index');
 
-const productDetail = async (productId) => {
-  const detail = await prisma.$queryRaw`
+const flow = async () => {
+  const flowlist = await prisma.$queryRaw`
     SELECT
       products.id as productId,
       products.name as productName,
@@ -17,9 +17,9 @@ const productDetail = async (productId) => {
     JOIN product_details ON products.id = product_details.product_id
     JOIN product_colors ON product_colors.id = product_details.color_id
     JOIN product_sizes ON product_sizes.id = product_details.size_id
-    WHERE products.id = ${productId}`;
+  `;
 
-  return detail;
+  return flowlist;
 };
 
-module.exports = { productDetail };
+module.exports = { flow };
