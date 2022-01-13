@@ -1,12 +1,12 @@
-const http = require("http");
-const express = require("express");
-const cors = require("cors");
-const routes = require("./routes");
+const http = require('http');
+const express = require('express');
+const cors = require('cors');
+const routes = require('./routes');
 const PORT = 8000;
 
 const app = express();
 
-//Middleware 
+//Middleware
 app.use(cors());
 app.use(express.json());
 
@@ -17,12 +17,14 @@ app.use(routes);
 const server = http.createServer(app);
 
 // Run my server
-const serverStart = async() => {
+const serverStart = async () => {
   try {
-    server.listen(PORT, () => { console.log(`server is listening on PORT ${PORT}`); });
+    server.listen(PORT, () => {
+      console.log(`server is listening on PORT ${PORT}`);
+    });
   } catch (err) {
-      console.log(err);
-      await prisma.$disconnect();
+    console.log(err);
+    await prisma.$disconnect();
   }
 };
 
