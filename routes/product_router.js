@@ -3,7 +3,6 @@ const router = express.Router();
 
 const {
   productDetailController,
-  productSortController,
   productCategoryController,
   productListController,
   slideController,
@@ -20,10 +19,7 @@ router.get('/list', productListController.productList);
 router.get('/slide', slideController.slide);
 router.get('/flow', flowController.flow);
 
-router.get('/sort', productSortController.productSort);
-
 router.get('/category', productCategoryController.categories);
 router.get('/sub_category', productCategoryController.subCategories);
-router.post('/filter_category', productCategoryController.filterCategories);
 
 module.exports = router;
