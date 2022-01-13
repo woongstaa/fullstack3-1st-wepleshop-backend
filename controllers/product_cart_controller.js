@@ -1,79 +1,23 @@
-const { productCartService } = require('../services');
+const { productCategoryService } = require('../services');
 
-const productCartAdd = async (req, res) => {
+const categories = async (req, res) => {
   try {
-    const { userId, productId, color, quantity, size, name, price, image } =
-      req.body;
-    const cart = await productCartService.productCartAdd(
-      userId,
-      productId,
-      color,
-      quantity,
-      size,
-      name,
-      price,
-      image
-    );
-    return res.status(200).json({ message: 'ProductCart', cart });
+    const category = await productCategoryService.categories();
+
+    return res.status(200).json({ message: category });
   } catch (err) {
-    console.log(err);
-    return res.status(500).json({ message: 'ProductCart Load Fail' });
+    return res.status(500).json({ message: 'CATEGORY NOT FOUND' });
   }
 };
 
-const productCartEdit = async (req, res) => {
+const subCategories = async (req, res) => {
   try {
-    const { userId, productId, color, quantity, size } = req.body;
-    const cart = await productCartService.productCartEdit(
-      userId,
-      productId,
-      color,
-      quantity,
-      size
-    );
+    const subCategory = await productCategoryService.subCategories();
 
-    return res.status(200).json(cart);
+    return res.status(200).json({ message: subCategory });
   } catch (err) {
-    console.log(err);
-
-    return res.status(400).json({ message: 'ProductCartEdit Fail' });
+    return res.status(500).json({ message: 'SUBCATEGORY NOT FOUND' });
   }
 };
 
-const productCartDelete = async (req, res) => {
-  try {
-    const { userId, productId, color, size } = req.body;
-    const cart = await productCartService.productCartDelete(
-      userId,
-      productId,
-      color,
-      size
-    );
-
-    return res.status(200).json(cart);
-  } catch (err) {
-    console.log(err);
-
-    return res.status(400).json({ message: 'ProductCartDelete Fail' });
-  }
-};
-
-const productCartGet = async (req, res) => {
-  try {
-    const { userId } = req.body;
-    const cart = await productCartService.productCartGet(userId);
-
-    return res.status(200).json({ message: 'ProductCart', cart });
-  } catch (err) {
-    console.log(err);
-
-    return res.status(400).json({ message: 'ProductCartGet Fail' });
-  }
-};
-
-module.exports = {
-  productCartAdd,
-  productCartEdit,
-  productCartDelete,
-  productCartGet,
-};
+module.exports = { categories, subCategories };

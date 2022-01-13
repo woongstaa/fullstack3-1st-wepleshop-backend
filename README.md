@@ -29,16 +29,17 @@
 
 ### 적용 기술
 
- - Front-End : React.js, Sass
- - Back-End : Node.js, Express, Prisma, nodemon, JWT, Bcrypt, My SQL, CORS
- - Common : RESTful API
- - Community Tools : Slack, Zoom, Notion
+- Front-End : React.js, Sass
+- Back-End : Node.js, Express, Prisma, nodemon, JWT, Bcrypt, My SQL, CORS
+- Common : RESTful API
+- Community Tools : Slack, Zoom, Notion
 
 ### 구현 기능
 
 - MySQL을 이용해 데이터베이스 관리
 
 - 로그인, 회원가입 API
+
   - 유효성 검증 기능
   - JWT을 활용한 토큰 발행
   - Bcrypt를 활용한 비밀번호 암호화
@@ -46,20 +47,24 @@
 
 - 카테고리 API
   - 1차 카테고리, 2차 카테고리 리스트
-  
 - 상품 리스트 & 필터링 & 정렬 API
+
   - 쿼리파라미터를 이용한 상품 리스트 필터링 구현
 
 - 상품 상세 API
+
   - 특정 상품의 재고, 색상, 사이즈, 이미지 호출
 
 - Carousel API
+
   - 슬라이드 이미지, 타이틀, 디스크립션 호출
 
 - 애니메이션 슬라이드 API
+
   - 이미지, alt값 호출
 
 - 장바구니 API
+
   - 디테일 페이지에서 제품 정보를 받아 장바구니에 추가
   - 중복되는 제품 장바구니 추가시 수량을 추가
   - 장바구니 내 제품의 삭제 및 수량 변경 기능 구현
@@ -78,8 +83,6 @@
 - 디테일 페이지
 
 <img width="1427" alt="스크린샷 2022-01-12 오후 6 50 12" src="https://user-images.githubusercontent.com/70682567/149118268-0c062a94-a1c2-440e-8bd9-0018b0d22daa.png">
-
-
 
 ## Reference
 

@@ -1,10 +1,12 @@
 const prisma = require('./index');
+const PrismaClient = require('@prisma/client');
+const { raw } = PrismaClient.Prisma;
 
-const productList = async (id) => {
+const productList = async (categoryId, subCategoryId, sortOption) => {
   const list = await prisma.$queryRaw`
     SELECT
-      products.id as product_id,
-      products.name as product_name,
+      products.id as productId,
+      products.name as productName,
       products.price,
       products.like_count as likeCount,
       product_imgs.img_url as imgUrl,
@@ -28,7 +30,7 @@ const productList = async (id) => {
       ELSE TRUE
       END
     ${raw(sortOption)}
-   `;
+  `;
   return list;
 };
 

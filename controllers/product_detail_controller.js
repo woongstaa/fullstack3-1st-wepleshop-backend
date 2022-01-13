@@ -1,16 +1,19 @@
-const { productDetailService } = require('../services');
+const { productListService } = require('../services');
 
-const productDetail = async (req, res) => {
+const productList = async (req, res) => {
   try {
-    const { productId } = req.query;
-    const detail = await productDetailService.productDetail(productId);
+    const { categoryId, subCategoryId, sortWord } = req.query;
 
-    return res.status(200).json(detail);
+    const list = await productListService.productList(
+      categoryId,
+      subCategoryId,
+      sortWord
+    );
+    return res.status(200).json({ message: 'ProductList', list });
   } catch (err) {
     console.log(err);
-
-    return res.status(400).json({ message: err.message });
+    return res.status(500).json({ message: 'ProductList Load Fail' });
   }
 };
 
-module.exports = { productDetail };
+module.exports = { productList };
