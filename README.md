@@ -6,7 +6,7 @@
 
 ### 개발 인원 및 기간
 
-- 개발기간 : 2021/12/27 ~ 2022/1/7
+- 개발기간 : 2021.12.27. ~ 2022.01.07
 - 개발 인원 : 이진웅, 최종민, 장종현, 박효상, 김영욱
 - [프론트 github 링크](https://github.com/woongstaa/fullstack3-1st-wepleshop-frontend)
 - [백엔드 github 링크](https://github.com/woongstaa/fullstack3-1st-wepleshop-backend)
